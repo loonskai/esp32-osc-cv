@@ -1,0 +1,8 @@
+[cargo]
+target = "xtensa-esp32-espidf"
+allFeatures = true
+sysroot = "~/.rustup/toolchains/esp"
+sysrootSrc = "~/.rustup/toolchains/esp/lib/rustlib/src/rust/library"
+
+[cargo.extraEnv]
+ESP_IDF_VERSION = "v5.2.2"
