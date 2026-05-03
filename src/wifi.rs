@@ -10,10 +10,10 @@ use anyhow::{Ok, Result};
 pub fn connect_wifi(
     modem: Modem<'static>,
     sysloop: EspSystemEventLoop,
-) -> Result<BlockingWifi<EspWifi<'static>>> {
+) -> Result<(BlockingWifi<EspWifi<'static>>, EspSystemEventLoop)> {
     let mut wifi = BlockingWifi::wrap(
         EspWifi::new(modem, sysloop.clone(), None)?,
-        sysloop,
+        sysloop.clone(),
     )?;
 
     wifi.set_configuration(&Configuration::Client(ClientConfiguration {
@@ -29,5 +29,5 @@ pub fn connect_wifi(
     let ip = wifi.wifi().sta_netif().get_ip_info()?;
     println!("WiFi connected - IP {:?}", ip.ip);
 
-    Ok(wifi)
+    Ok((wifi, sysloop))
 }
